@@ -332,3 +332,6 @@ State these plainly; the ground truth here is a simulated world we generated.
    single-pass self-map cannot. It is not a substitute in general: limitation 1
    is what its absence costs on a repeating street grid, and adding the back end
    is now the highest-value next step rather than a stretch goal.
+##Claude was used during the development of this project to assist with the implementation and configuration of technologies including ROS 2, WSL, Gazebo, RViz, and GIS-related components.
+
+   
