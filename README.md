@@ -335,6 +335,6 @@ State these plainly; the ground truth here is a simulated world we generated.
 
 ## AI Assistance
 
-Claude was used during the development of this project to assist with the implementation and configuration of technologies including ROS 2, WSL, Gazebo, RViz, and GIS-related components.
+During the development of this project, we used Claude as supplementary assistance for the implementation and configuration of ROS 2, WSL, Gazebo, RViz, and GIS-related components. We also used it to provide us limited assistance with report writing, for improving language clarity. All technical decisions, implementation, testing, analysis were carried out by us.
 
    
