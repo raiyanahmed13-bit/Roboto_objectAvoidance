@@ -1,0 +1,248 @@
+<?xml version="1.0" ?>
+<!--
+  Differential-drive ground robot.
+
+  Hand-written rather than adapted from TurtleBot3: the Humble
+  turtlebot3_gazebo package targets Gazebo Classic, and porting it to
+  Fortress is half a day of yak-shaving for a robot this simple.
+
+  IMPORTANT: the lidar block and the wheel separation below are duplicated
+  from tools/gis_pipeline/site.yaml, which is the project's single source of
+  truth. tests/test_robot_model.py asserts they still agree - if you change
+  one, that test tells you to change the other rather than letting the
+  simulator and the planner quietly disagree about the sensor.
+
+  Geometry (world z when spawned on flat ground):
+      wheel radius 0.10 -> axle at z = 0.10
+      base_link origin  -> z = 0.15
+      caster sphere     -> z = 0.05
+      lidar             -> z = 0.30
+-->
+<sdf version="1.8">
+  <model name="roboto_bot">
+
+    <link name="base_link">
+      <pose>0 0 0.15 0 0 0</pose>
+      <inertial>
+        <!-- CENTRE OF MASS FORWARD OF THE AXLE.
+             The wheels are at x = 0 and the caster at x = +0.18, so with
+             the mass centred on the box (x = 0) the COM sat exactly over
+             the axle: the caster carried no load and nothing supported the
+             robot behind the axle at all. It rocked backwards under any
+             acceleration and settled on its tail, nose-up by
+                 atan2(0.05, 0.25) = 11.3 degrees
+             (the rear underside of the 0.5 x 0.4 x 0.2 box, whose bottom
+             is at z = 0.05, reaching the ground).
+
+             Measured live at exactly 11.8 degrees, and it is what breaks
+             the mission: the lidar tilts with the body, so at 30 m range
+             the scan plane is 6 m off horizontal, beams sail over walls,
+             and 2D scan matching has nothing real to match. This is the
+             same failure the flat-ground decision exists to avoid, arriving
+             through the robot rather than through the terrain.
+
+             0.07 m forward loads the caster and leaves a wide margin: the
+             robot stays down while g * d > a * h, i.e. while
+             9.81 * 0.07 > a * 0.15, so up to ~4.5 m/s^2 against the
+             drive's 1.0 m/s^2 limit. -->
+        <pose>0.07 0 0 0 0 0</pose>
+        <mass>15.0</mass>
+        <!-- Solid box 0.5 x 0.4 x 0.2: I = m/12 * (a^2 + b^2) -->
+        <inertia>
+          <ixx>0.2500</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.3625</iyy><iyz>0</iyz>
+          <izz>0.5125</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry><box><size>0.5 0.4 0.2</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><box><size>0.5 0.4 0.2</size></box></geometry>
+        <material>
+          <ambient>0.20 0.35 0.55 1</ambient>
+          <diffuse>0.25 0.45 0.70 1</diffuse>
+        </material>
+      </visual>
+
+      <sensor name="gpu_lidar" type="gpu_lidar">
+        <!-- Clear of the chassis: a sensor inside its own collision box
+             returns range_min on every beam. -->
+        <pose>0.15 0 0.15 0 0 0</pose>
+        <topic>scan</topic>
+        <update_rate>10</update_rate>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>180</samples>
+              <resolution>1</resolution>
+              <min_angle>-2.356194490</min_angle>  <!-- -135 deg -->
+              <max_angle>2.356194490</max_angle>   <!-- +135 deg, 270 FOV -->
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <min_angle>0</min_angle>
+              <max_angle>0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <!-- 30 m, not 12: measured median free-cell clearance at this
+                 site is 8.5 m with p90 22 m, and a 12 m sensor returns
+                 1/180 beams in the open, which no scan matcher can use. -->
+            <max>30.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.02</stddev>
+          </noise>
+        </lidar>
+      </sensor>
+    </link>
+
+    <link name="wheel_left">
+      <pose>0 0.2 0.10 0 0 0</pose>
+      <inertial>
+        <mass>1.0</mass>
+        <!-- Cylinder r=0.10 h=0.05, spin axis = y.
+             about axis: m r^2 / 2 ; about diameter: m/12 (3r^2 + h^2) -->
+        <inertia>
+          <ixx>0.002708</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.005000</iyy><iyz>0</iyz>
+          <izz>0.002708</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry><cylinder><radius>0.10</radius><length>0.05</length></cylinder></geometry>
+        <surface>
+          <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry><cylinder><radius>0.10</radius><length>0.05</length></cylinder></geometry>
+        <material>
+          <ambient>0.08 0.08 0.08 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <link name="wheel_right">
+      <pose>0 -0.2 0.10 0 0 0</pose>
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.002708</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.005000</iyy><iyz>0</iyz>
+          <izz>0.002708</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry><cylinder><radius>0.10</radius><length>0.05</length></cylinder></geometry>
+        <surface>
+          <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry><cylinder><radius>0.10</radius><length>0.05</length></cylinder></geometry>
+        <material>
+          <ambient>0.08 0.08 0.08 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <link name="caster">
+      <pose>0.18 0 0.05 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.0005</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.0005</iyy><iyz>0</iyz>
+          <izz>0.0005</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry><sphere><radius>0.05</radius></sphere></geometry>
+        <surface>
+          <!-- Near-frictionless: a caster that grips fights the drive
+               wheels and makes the robot veer under pure-forward commands. -->
+          <friction><ode><mu>0.001</mu><mu2>0.001</mu2></ode></friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry><sphere><radius>0.05</radius></sphere></geometry>
+        <material><ambient>0.3 0.3 0.3 1</ambient></material>
+      </visual>
+    </link>
+
+    <joint name="joint_wheel_left" type="revolute">
+      <parent>base_link</parent>
+      <child>wheel_left</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper></limit>
+        <dynamics><damping>0.02</damping></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="joint_wheel_right" type="revolute">
+      <parent>base_link</parent>
+      <child>wheel_right</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper></limit>
+        <dynamics><damping>0.02</damping></dynamics>
+      </axis>
+    </joint>
+
+    <joint name="joint_caster" type="ball">
+      <parent>base_link</parent>
+      <child>caster</child>
+    </joint>
+
+    <plugin filename="ignition-gazebo-diff-drive-system"
+            name="ignition::gazebo::systems::DiffDrive">
+      <left_joint>joint_wheel_left</left_joint>
+      <right_joint>joint_wheel_right</right_joint>
+      <!-- Must match OdomErrorModel.wheel_baseline_m in
+           roboto_core/sim/odom_corruptor.py -->
+      <wheel_separation>0.4</wheel_separation>
+      <wheel_radius>0.10</wheel_radius>
+      <max_linear_acceleration>1.0</max_linear_acceleration>
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <tf_topic>tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+      <odom_publish_frequency>50</odom_publish_frequency>
+    </plugin>
+
+    <!-- Ground truth. This is the reference for every ATE number, and it is
+         also what the odometry corruptor consumes: DiffDrive's own odometry
+         is near-perfect, so it is NOT used as the robot's odometry input. -->
+    <plugin filename="ignition-gazebo-pose-publisher-system"
+            name="ignition::gazebo::systems::PosePublisher">
+      <publish_link_pose>false</publish_link_pose>
+      <publish_model_pose>true</publish_model_pose>
+      <publish_nested_model_pose>false</publish_nested_model_pose>
+      <use_pose_vector_msg>true</use_pose_vector_msg>
+      <update_frequency>50</update_frequency>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-joint-state-publisher-system"
+            name="ignition::gazebo::systems::JointStatePublisher">
+      <joint_name>joint_wheel_left</joint_name>
+      <joint_name>joint_wheel_right</joint_name>
+    </plugin>
+
+  </model>
+</sdf>

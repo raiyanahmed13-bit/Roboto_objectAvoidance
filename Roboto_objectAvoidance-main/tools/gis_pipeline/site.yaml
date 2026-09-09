@@ -1,0 +1,121 @@
+# ============================================================================
+# SINGLE SOURCE OF TRUTH for all project geometry.
+#
+# Every coordinate number in this project lives here and nowhere else.
+# A hardcoded coordinate, extent, or resolution anywhere in the codebase
+# is a bug -- see tools/gis_pipeline/common/crs.py.
+#
+# The invariant this file establishes:
+#     local TM frame  ==  ROS `map` frame  ==  Gazebo world frame
+#     x = East, y = North, z = Up, origin at (lat, lon)
+# No package may apply any additional offset or rotation.
+# ============================================================================
+
+name: pittsburgh_greenfield
+
+# Site origin. This point is (0, 0) in every metric frame in the project.
+# Greenfield / Squirrel Hill South, Pittsburgh PA -- chosen for genuine relief
+# (~40 m within 300 m), dense OSM building coverage, and USGS 3DEP 1 m DEM.
+origin:
+  lat: 40.4187
+  lon: -79.9376
+  alt_m: 293.0
+
+# Site-local Transverse Mercator, k=1.
+#
+# Deliberately NOT UTM: k=1 gives zero scale distortion at the origin, and
+# coordinates stay small numbers near zero. UTM eastings near 500,000 m lose
+# ~6 cm of precision when stored as float32 -- which silently corrupts a
+# 0.10 m grid. Small coordinates also keep debug output readable.
+#
+# Derived from origin.lat/lon; regenerate with crs.SiteSpec.proj4 if you
+# move the origin. Kept explicit here so the file is self-describing.
+crs_local: "+proj=tmerc +lat_0=40.4187 +lon_0=-79.9376 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs"
+
+# Working extent in local metric coordinates, relative to origin.
+# 300 m x 300 m. Larger extents give more buildings than Gazebo renders at
+# usable real-time factor, and longer traverses than the schedule allows.
+extent_m:
+  xmin: -150.0
+  ymin: -150.0
+  xmax: 150.0
+  ymax: 150.0
+
+# Planning/mapping resolution. Shared by the prior costmap, the ground-truth
+# grid, AND the SLAM occupancy grid -- so discrepancy detection reduces to a
+# direct element-wise array comparison with no resampling.
+# At 0.10 m this yields a 3000 x 3000 grid.
+resolution_m: 0.10
+
+# DEM native resolution. USGS 3DEP 1 m where available.
+dem_resolution_m: 1.0
+
+# Buffer applied to the OSM/DEM fetch bbox so buildings straddling the
+# extent boundary are not clipped mid-footprint.
+fetch_buffer_m: 50.0
+
+# Robot start pose in local metric coordinates.
+robot_spawn:
+  x: -120.0
+  y: -95.0
+  yaw_deg: 0.0
+
+# --- Mission -----------------------------------------------------------
+# Where the demo drives to. Belongs to the site, not to the launch file or
+# the tools: a coordinate that is open street in one city is inside a
+# building in another. Must be drivable -- build_prior checks the spawn,
+# and the planner will refuse a goal in a lethal cell.
+mission:
+  goal: [95.0, 110.0]
+
+# --- Vector filtering -------------------------------------------------------
+buildings:
+  min_area_m2: 15.0        # drop sheds/garages that add cost without realism
+  simplify_tol_m: 0.20     # Douglas-Peucker; 2x resolution
+  default_height_m: 6.0    # when building:levels is untagged
+  levels_to_m: 3.0         # metres per storey
+
+  # PRESENTATION ONLY. OSM tagged exactly 1 of 236 buildings here with a
+  # height, so the other 235 all take default_height_m and the world
+  # renders as a field of identical slabs. Untagged buildings are instead
+  # given a height from this range, drawn deterministically from their own
+  # position so rebuilds are reproducible. Buildings with a real OSM tag
+  # keep it.
+  #
+  # This cannot affect a result. prior_occ and prior_cost are built from 2D
+  # footprints and never read a height, and the lidar plane is at 0.30 m,
+  # so any height above about a metre is identical as far as the sensor is
+  # concerned. Delete this key to go back to flat default_height_m.
+  untagged_height_range_m: [4.5, 11.5]   # roughly 1.5 to 4 storeys
+
+roads:
+  default_width_m: 6.0     # when width/lanes are untagged
+
+# --- Robot / sensor model ---------------------------------------------------
+# Referenced by the planner (inflation radius) and the raycast simulator.
+robot:
+  radius_m: 0.35
+  max_speed_mps: 1.0
+
+lidar:
+  num_beams: 180
+  fov_deg: 270.0
+  range_min_m: 0.15
+  # 30 m, not the 12 m an indoor robot would use. Measured on this site:
+  # median free-cell clearance is 8.5 m and p90 is 22 m, so at 12 m range
+  # the robot sees 0-1 beams across much of the map and scan matching has
+  # nothing to work with. Return counts at the spawn pose:
+  #     12 m -> 1/180    20 m -> 13/180    30 m -> 68/180    50 m -> 104/180
+  # 30 m is also the realistic figure -- outdoor 2D scanners (RPLIDAR S1,
+  # Hokuyo UTM-30LX) are 30-40 m class. gpu_lidar cost scales with beam
+  # count, not range, so this is nearly free in simulation.
+  range_max_m: 30.0
+  rate_hz: 10.0
+  range_noise_std_m: 0.02
+
+# --- Traversability ---------------------------------------------------------
+slope:
+  max_traversable_deg: 25.0   # hard block above this
+  w_uphill: 1.0
+  w_downhill: 0.3             # descending is cheaper than climbing
+  w_crossslope: 0.6

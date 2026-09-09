@@ -1,0 +1,97 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded: ~
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 20
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 10
+      Plane Cell Count: 40
+      Color: 100; 100; 100
+    - Class: rviz_default_plugins/Map
+      Name: GIS prior
+      Enabled: true
+      Topic:
+        Value: /prior/map
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Color Scheme: costmap
+      Alpha: 0.45
+    - Class: rviz_default_plugins/Map
+      Name: SLAM map
+      Enabled: true
+      Topic:
+        Value: /slam/map
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Color Scheme: map
+      Alpha: 0.8
+    - Class: rviz_default_plugins/LaserScan
+      Name: Lidar
+      Enabled: true
+      Topic:
+        Value: /scan
+        Reliability Policy: Best Effort
+      Size (m): 0.08
+      Color: 255; 220; 60
+      Style: Points
+    - Class: rviz_default_plugins/Path
+      Name: Plan
+      Enabled: true
+      Topic:
+        Value: /plan
+        Durability Policy: Transient Local
+      Color: 40; 220; 120
+      Line Width: 0.15
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Discrepancies
+      Enabled: true
+      Topic:
+        Value: /discrepancies
+        Reliability Policy: Reliable
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Robot
+      Enabled: true
+      Topic:
+        Value: /robot_marker
+        Reliability Policy: Reliable
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Start and goal
+      Enabled: true
+      Topic:
+        Value: /endpoints
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+    - Class: rviz_default_plugins/Pose
+      Name: SLAM pose
+      Enabled: true
+      Topic:
+        Value: /slam/pose
+      Shape: Arrow
+      Color: 60; 160; 255
+      Shaft Length: 1.0
+      Head Length: 0.4
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: false
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Top-down
+      Scale: 6
+      X: -40
+      Y: 10
+Window Geometry:
+  Height: 900
+  Width: 1500

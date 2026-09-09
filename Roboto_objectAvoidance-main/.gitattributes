@@ -1,0 +1,32 @@
+# The repo is authored on Windows but executed on Linux (WSL2). Anything the
+# Linux side parses must be stored and checked out with LF endings -- a CRLF
+# shebang line makes a script fail with a confusing "bad interpreter" or, in
+# SDF/XML, silently mangles attribute parsing.
+#
+# Without this, every `bash script.sh` needs a `sed 's/\r$//'` first.
+
+* text=auto eol=lf
+
+*.sh      text eol=lf
+*.bash    text eol=lf
+*.py      text eol=lf
+*.sdf     text eol=lf
+*.urdf    text eol=lf
+*.xacro   text eol=lf
+*.xml     text eol=lf
+*.yaml    text eol=lf
+*.yml     text eol=lf
+*.md      text eol=lf
+Makefile  text eol=lf
+
+# Binary artifacts: never touch these.
+*.pgm     binary
+*.tif     binary
+*.gpkg    binary
+*.npz     binary
+*.png     binary
+*.dae     binary
+*.stl     binary
+*.db3     binary
+*.docx    binary
+*.pdf     binary

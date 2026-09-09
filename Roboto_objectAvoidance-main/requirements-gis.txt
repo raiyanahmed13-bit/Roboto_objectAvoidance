@@ -1,0 +1,13 @@
+geopandas==1.1.4
+matplotlib==3.11.1
+numpy==2.5.2
+osmnx==2.1.1
+pillow==12.3.0
+pyproj==3.7.2
+pytest==9.1.1
+PyYAML==6.0.3
+rasterio==1.5.1
+scipy==1.18.1
+shapely==2.1.2
+trimesh==5.0.0
+mapbox-earcut

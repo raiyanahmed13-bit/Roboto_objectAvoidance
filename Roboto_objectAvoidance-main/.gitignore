@@ -1,0 +1,30 @@
+.venv-gis/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# ROS build outputs
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Bags are large and regenerable; checksums are tracked instead.
+experiments/bags/
+!experiments/bags/.gitkeep
+
+experiments/results/*.csv
+experiments/figures/*.png
+
+# Generated world/derived artifacts are committed deliberately (see README)
+# so results are reproducible without refetching OSM/DEM. Only caches here.
+data/**/cache/
+
+# osmnx/aiohttp drop their HTTP response cache in the CWD.
+cache/
+*.sqlite
+
+# Python build artifacts
+*.egg-info/
+__pycache__/
+*.pyc
+.venv-gis/

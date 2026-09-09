@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<!--
+  Gate A diagnostic world.
+
+  Minimal world whose ONLY purpose is to answer one question: does a
+  gpu_lidar sensor produce real ranges under WSL2?
+
+  This matters more than whether the GUI renders. In Gazebo Fortress the
+  lidar is `gpu_lidar` - it RENDERS the scene to produce range data via
+  the ogre2 engine. If OGRE2 fails to initialise, /lidar goes silent or
+  returns inf, and SLAM has no input at all. Headless mode does not avoid
+  this: headless still renders, it only skips the window.
+
+  Geometry is deliberately trivial and asymmetric so the expected ranges
+  are known by construction:
+      wall at x = +5 m   -> forward beam should read ~5 m
+      wall at y = -8 m   -> right beam should read ~8 m
+      nothing behind     -> rear beams should read inf
+-->
+<sdf version="1.8">
+  <world name="gate_a">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="ignition-gazebo-physics-system"
+            name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system"
+            name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <!-- Without this plugin gpu_lidar produces nothing at all. -->
+    <plugin filename="ignition-gazebo-sensors-system"
+            name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Wall 5 m ahead (+x) -->
+    <model name="wall_x">
+      <static>true</static>
+      <pose>5 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 6 2</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 6 2</size></box></geometry>
+          <material><ambient>0.7 0.2 0.2 1</ambient><diffuse>0.8 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Wall 8 m to the right (-y) -->
+    <model name="wall_y">
+      <static>true</static>
+      <pose>0 -8 1 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>6 0.2 2</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>6 0.2 2</size></box></geometry>
+          <material><ambient>0.2 0.2 0.7 1</ambient><diffuse>0.3 0.3 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Static lidar post at the origin -->
+    <model name="lidar_post">
+      <static>true</static>
+      <pose>0 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 0.2 1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 0.2 1</size></box></geometry>
+        </visual>
+
+        <sensor name="gpu_lidar" type="gpu_lidar">
+          <!-- Above the post. At the link origin the sensor sits INSIDE the
+               0.2 m box and every beam returns range_min. -->
+          <pose>0 0 0.6 0 0 0</pose>
+          <topic>lidar</topic>
+          <update_rate>10</update_rate>
+          <always_on>true</always_on>
+          <visualize>true</visualize>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>180</samples>
+                <resolution>1</resolution>
+                <min_angle>-2.356194</min_angle>   <!-- -135 deg -->
+                <max_angle>2.356194</max_angle>    <!-- +135 deg -->
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.15</min>
+              <max>30.0</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.02</stddev>
+            </noise>
+          </lidar>
+        </sensor>
+      </link>
+    </model>
+
+  </world>
+</sdf>

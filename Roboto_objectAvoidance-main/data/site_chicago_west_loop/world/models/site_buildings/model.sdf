@@ -1,0 +1,637 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <model name="site_buildings">
+    <static>true</static>
+    <link name="link">
+      <!-- Visual is the true extruded footprint mesh. gpu_lidar renders the
+           scene, so this is what the lidar actually measures against.
+           Collision is one oriented box per building: DART's ODE mesh path
+           segfaults on the concatenated mesh, and physics only needs
+           contact response. See footprint_boxes() for the reasoning. -->
+      <visual name="visual">
+        <geometry><mesh><uri>meshes/buildings.obj</uri></mesh></geometry>
+        <material>
+          <ambient>0.62 0.60 0.56 1</ambient>
+          <diffuse>0.72 0.70 0.66 1</diffuse>
+          <specular>0.10 0.10 0.10 1</specular>
+        </material>
+      </visual>
+      <collision name="c0">
+        <pose>-95.993 -40.161 4.500 0 0 1.595780</pose>
+        <geometry><box><size>35.433 41.251 9.000</size></box></geometry>
+      </collision>
+      <collision name="c1">
+        <pose>154.458 191.765 3.923 0 0 0.017434</pose>
+        <geometry><box><size>24.241 7.778 7.846</size></box></geometry>
+      </collision>
+      <collision name="c2">
+        <pose>-116.423 81.113 9.000 0 0 0.016001</pose>
+        <geometry><box><size>77.079 75.287 18.000</size></box></geometry>
+      </collision>
+      <collision name="c3">
+        <pose>-23.208 114.087 9.000 0 0 1.590538</pose>
+        <geometry><box><size>13.031 41.702 18.000</size></box></geometry>
+      </collision>
+      <collision name="c4">
+        <pose>-22.935 100.602 4.987 0 0 1.591002</pose>
+        <geometry><box><size>13.964 41.711 9.973</size></box></geometry>
+      </collision>
+      <collision name="c5">
+        <pose>-90.187 21.554 5.221 0 0 1.583752</pose>
+        <geometry><box><size>44.804 26.133 10.442</size></box></geometry>
+      </collision>
+      <collision name="c6">
+        <pose>-105.908 210.686 1.500 0 0 -1.568632</pose>
+        <geometry><box><size>25.302 35.667 3.000</size></box></geometry>
+      </collision>
+      <collision name="c7">
+        <pose>155.203 18.773 5.742 0 0 1.589687</pose>
+        <geometry><box><size>26.396 14.155 11.484</size></box></geometry>
+      </collision>
+      <collision name="c8">
+        <pose>147.671 161.773 2.568 0 0 -3.130570</pose>
+        <geometry><box><size>8.077 21.232 5.137</size></box></geometry>
+      </collision>
+      <collision name="c9">
+        <pose>125.978 -123.258 3.075 0 0 1.591822</pose>
+        <geometry><box><size>20.153 4.914 6.150</size></box></geometry>
+      </collision>
+      <collision name="c10">
+        <pose>87.730 172.146 12.000 0 0 1.589832</pose>
+        <geometry><box><size>56.712 70.237 24.000</size></box></geometry>
+      </collision>
+      <collision name="c11">
+        <pose>119.354 -176.249 3.277 0 0 1.603447</pose>
+        <geometry><box><size>22.767 9.030 6.554</size></box></geometry>
+      </collision>
+      <collision name="c12">
+        <pose>120.857 -123.393 3.863 0 0 -1.549771</pose>
+        <geometry><box><size>20.230 5.332 7.726</size></box></geometry>
+      </collision>
+      <collision name="c13">
+        <pose>115.735 -123.604 3.364 0 0 1.589948</pose>
+        <geometry><box><size>20.051 5.115 6.728</size></box></geometry>
+      </collision>
+      <collision name="c14">
+        <pose>110.911 -174.716 5.281 0 0 1.590709</pose>
+        <geometry><box><size>18.985 7.884 10.563</size></box></geometry>
+      </collision>
+      <collision name="c15">
+        <pose>109.064 -121.258 4.272 0 0 -1.557830</pose>
+        <geometry><box><size>24.567 6.708 8.544</size></box></geometry>
+      </collision>
+      <collision name="c16">
+        <pose>101.253 -123.624 2.846 0 0 -1.551900</pose>
+        <geometry><box><size>20.879 7.018 5.692</size></box></geometry>
+      </collision>
+      <collision name="c17">
+        <pose>108.113 -36.397 4.358 0 0 0.015634</pose>
+        <geometry><box><size>8.586 25.189 8.717</size></box></geometry>
+      </collision>
+      <collision name="c18">
+        <pose>103.163 -172.330 2.442 0 0 -1.553798</pose>
+        <geometry><box><size>15.861 7.474 4.884</size></box></geometry>
+      </collision>
+      <collision name="c19">
+        <pose>94.596 -123.822 2.432 0 0 -1.562161</pose>
+        <geometry><box><size>18.339 6.553 4.864</size></box></geometry>
+      </collision>
+      <collision name="c20">
+        <pose>96.841 -34.992 4.500 0 0 -1.567279</pose>
+        <geometry><box><size>23.692 6.400 9.000</size></box></geometry>
+      </collision>
+      <collision name="c21">
+        <pose>95.884 -171.303 5.150 0 0 -3.126317</pose>
+        <geometry><box><size>6.550 14.787 10.299</size></box></geometry>
+      </collision>
+      <collision name="c22">
+        <pose>86.961 -123.375 4.269 0 0 -3.109525</pose>
+        <geometry><box><size>7.624 20.140 8.538</size></box></geometry>
+      </collision>
+      <collision name="c23">
+        <pose>86.120 -33.631 3.227 0 0 1.592123</pose>
+        <geometry><box><size>21.031 8.933 6.453</size></box></geometry>
+      </collision>
+      <collision name="c24">
+        <pose>88.109 -179.579 4.500 0 0 -1.554775</pose>
+        <geometry><box><size>31.135 7.816 9.000</size></box></geometry>
+      </collision>
+      <collision name="c25">
+        <pose>79.577 -89.446 4.682 0 0 -1.536759</pose>
+        <geometry><box><size>10.980 5.280 9.363</size></box></geometry>
+      </collision>
+      <collision name="c26">
+        <pose>80.505 -120.393 4.297 0 0 1.596537</pose>
+        <geometry><box><size>24.538 5.537 8.594</size></box></geometry>
+      </collision>
+      <collision name="c27">
+        <pose>80.429 -171.025 3.837 0 0 1.575457</pose>
+        <geometry><box><size>14.257 6.559 7.673</size></box></geometry>
+      </collision>
+      <collision name="c28">
+        <pose>74.625 -89.594 4.500 0 0 1.605286</pose>
+        <geometry><box><size>10.886 4.942 9.000</size></box></geometry>
+      </collision>
+      <collision name="c29">
+        <pose>74.209 -122.140 4.110 0 0 -1.547193</pose>
+        <geometry><box><size>21.576 7.188 8.221</size></box></geometry>
+      </collision>
+      <collision name="c30">
+        <pose>77.928 -36.520 5.066 0 0 1.583336</pose>
+        <geometry><box><size>22.643 5.727 10.132</size></box></geometry>
+      </collision>
+      <collision name="c31">
+        <pose>71.159 -35.065 5.000 0 0 1.568438</pose>
+        <geometry><box><size>17.609 6.491 10.000</size></box></geometry>
+      </collision>
+      <collision name="c32">
+        <pose>73.173 -177.534 4.500 0 0 1.582913</pose>
+        <geometry><box><size>25.213 7.387 9.000</size></box></geometry>
+      </collision>
+      <collision name="c33">
+        <pose>65.628 -124.385 5.662 0 0 1.593675</pose>
+        <geometry><box><size>21.239 9.861 11.325</size></box></geometry>
+      </collision>
+      <collision name="c34">
+        <pose>64.296 -86.552 3.610 0 0 0.021226</pose>
+        <geometry><box><size>9.424 7.189 7.220</size></box></geometry>
+      </collision>
+      <collision name="c35">
+        <pose>64.012 -35.143 4.143 0 0 1.571750</pose>
+        <geometry><box><size>17.608 7.861 8.286</size></box></geometry>
+      </collision>
+      <collision name="c36">
+        <pose>66.404 -174.338 2.673 0 0 -3.121909</pose>
+        <geometry><box><size>5.646 15.572 5.346</size></box></geometry>
+      </collision>
+      <collision name="c37">
+        <pose>56.314 -88.367 4.908 0 0 1.592108</pose>
+        <geometry><box><size>10.521 6.868 9.817</size></box></geometry>
+      </collision>
+      <collision name="c38">
+        <pose>60.614 -174.448 4.431 0 0 1.584653</pose>
+        <geometry><box><size>15.599 6.160 8.861</size></box></geometry>
+      </collision>
+      <collision name="c39">
+        <pose>48.709 -121.663 4.329 0 0 1.581750</pose>
+        <geometry><box><size>24.820 8.356 8.658</size></box></geometry>
+      </collision>
+      <collision name="c40">
+        <pose>48.201 159.013 4.500 0 0 -1.543943</pose>
+        <geometry><box><size>23.592 5.799 9.000</size></box></geometry>
+      </collision>
+      <collision name="c41">
+        <pose>56.180 -35.215 2.890 0 0 -1.569842</pose>
+        <geometry><box><size>17.642 7.803 5.781</size></box></geometry>
+      </collision>
+      <collision name="c42">
+        <pose>42.247 -123.761 3.136 0 0 1.595522</pose>
+        <geometry><box><size>20.828 4.642 6.272</size></box></geometry>
+      </collision>
+      <collision name="c43">
+        <pose>36.415 173.712 2.971 0 0 -1.541293</pose>
+        <geometry><box><size>52.729 15.079 5.942</size></box></geometry>
+      </collision>
+      <collision name="c44">
+        <pose>53.122 -177.850 4.279 0 0 1.580973</pose>
+        <geometry><box><size>22.200 8.965 8.557</size></box></geometry>
+      </collision>
+      <collision name="c45">
+        <pose>37.491 -123.877 4.191 0 0 -1.546070</pose>
+        <geometry><box><size>20.830 4.874 8.381</size></box></geometry>
+      </collision>
+      <collision name="c46">
+        <pose>42.895 19.914 7.500 0 0 -1.551113</pose>
+        <geometry><box><size>37.971 29.446 15.000</size></box></geometry>
+      </collision>
+      <collision name="c47">
+        <pose>42.497 -35.450 4.500 0 0 -1.422884</pose>
+        <geometry><box><size>23.935 12.539 9.000</size></box></geometry>
+      </collision>
+      <collision name="c48">
+        <pose>43.775 -176.113 4.500 0 0 1.588043</pose>
+        <geometry><box><size>18.296 9.821 9.000</size></box></geometry>
+      </collision>
+      <collision name="c49">
+        <pose>32.505 -123.993 5.376 0 0 0.021688</pose>
+        <geometry><box><size>5.215 20.831 10.751</size></box></geometry>
+      </collision>
+      <collision name="c50">
+        <pose>25.515 158.394 3.472 0 0 1.604364</pose>
+        <geometry><box><size>18.496 6.508 6.945</size></box></geometry>
+      </collision>
+      <collision name="c51">
+        <pose>34.892 -173.248 4.513 0 0 1.594256</pose>
+        <geometry><box><size>15.521 7.299 9.026</size></box></geometry>
+      </collision>
+      <collision name="c52">
+        <pose>22.852 48.787 3.330 0 0 -1.552376</pose>
+        <geometry><box><size>18.030 7.372 6.660</size></box></geometry>
+      </collision>
+      <collision name="c53">
+        <pose>26.064 -125.932 4.500 0 0 -1.549033</pose>
+        <geometry><box><size>17.253 7.746 9.000</size></box></geometry>
+      </collision>
+      <collision name="c54">
+        <pose>28.178 -173.121 3.724 0 0 1.593001</pose>
+        <geometry><box><size>13.144 5.030 7.447</size></box></geometry>
+      </collision>
+      <collision name="c55">
+        <pose>19.153 157.278 4.500 0 0 -1.543805</pose>
+        <geometry><box><size>18.926 5.480 9.000</size></box></geometry>
+      </collision>
+      <collision name="c56">
+        <pose>25.002 -35.589 4.500 0 0 1.595000</pose>
+        <geometry><box><size>20.864 6.774 9.000</size></box></geometry>
+      </collision>
+      <collision name="c57">
+        <pose>23.384 -178.235 4.145 0 0 1.595765</pose>
+        <geometry><box><size>23.280 5.032 8.291</size></box></geometry>
+      </collision>
+      <collision name="c58">
+        <pose>15.369 29.136 4.500 0 0 -1.555476</pose>
+        <geometry><box><size>57.994 8.019 9.000</size></box></geometry>
+      </collision>
+      <collision name="c59">
+        <pose>13.264 157.273 4.500 0 0 -1.542528</pose>
+        <geometry><box><size>18.726 6.309 9.000</size></box></geometry>
+      </collision>
+      <collision name="c60">
+        <pose>16.402 -33.200 4.500 0 0 -1.543567</pose>
+        <geometry><box><size>16.860 7.550 9.000</size></box></geometry>
+      </collision>
+      <collision name="c61">
+        <pose>18.488 -177.840 4.658 0 0 0.012144</pose>
+        <geometry><box><size>4.824 22.304 9.317</size></box></geometry>
+      </collision>
+      <collision name="c62">
+        <pose>7.591 41.439 4.557 0 0 1.587365</pose>
+        <geometry><box><size>29.560 7.189 9.115</size></box></geometry>
+      </collision>
+      <collision name="c63">
+        <pose>14.162 -126.733 3.739 0 0 0.026267</pose>
+        <geometry><box><size>6.344 15.257 7.479</size></box></geometry>
+      </collision>
+      <collision name="c64">
+        <pose>11.966 -87.824 3.168 0 0 0.018539</pose>
+        <geometry><box><size>17.407 7.009 6.337</size></box></geometry>
+      </collision>
+      <collision name="c65">
+        <pose>7.283 156.348 4.500 0 0 1.594942</pose>
+        <geometry><box><size>20.249 5.846 9.000</size></box></geometry>
+      </collision>
+      <collision name="c66">
+        <pose>12.073 -171.387 2.881 0 0 -3.127013</pose>
+        <geometry><box><size>7.179 16.975 5.763</size></box></geometry>
+      </collision>
+      <collision name="c67">
+        <pose>8.082 -126.880 5.190 0 0 -3.119417</pose>
+        <geometry><box><size>6.011 15.257 10.381</size></box></geometry>
+      </collision>
+      <collision name="c68">
+        <pose>1.785 -127.043 5.677 0 0 -1.550614</pose>
+        <geometry><box><size>15.242 6.618 11.355</size></box></geometry>
+      </collision>
+      <collision name="c69">
+        <pose>0.585 -173.764 3.180 0 0 0.018129</pose>
+        <geometry><box><size>6.127 15.095 6.360</size></box></geometry>
+      </collision>
+      <collision name="c70">
+        <pose>-4.860 -127.210 3.974 0 0 1.590976</pose>
+        <geometry><box><size>15.239 6.742 7.948</size></box></geometry>
+      </collision>
+      <collision name="c71">
+        <pose>-6.030 -173.898 2.537 0 0 0.014182</pose>
+        <geometry><box><size>7.165 15.151 5.073</size></box></geometry>
+      </collision>
+      <collision name="c72">
+        <pose>-11.767 -127.382 3.776 0 0 -1.550616</pose>
+        <geometry><box><size>15.266 7.075 7.551</size></box></geometry>
+      </collision>
+      <collision name="c73">
+        <pose>-13.128 -174.010 5.633 0 0 0.016993</pose>
+        <geometry><box><size>7.190 15.155 11.265</size></box></geometry>
+      </collision>
+      <collision name="c74">
+        <pose>-18.640 -127.543 4.094 0 0 1.584955</pose>
+        <geometry><box><size>15.299 6.833 8.189</size></box></geometry>
+      </collision>
+      <collision name="c75">
+        <pose>-20.116 -174.120 2.752 0 0 -3.122663</pose>
+        <geometry><box><size>7.040 15.186 5.503</size></box></geometry>
+      </collision>
+      <collision name="c76">
+        <pose>-25.515 -127.705 5.422 0 0 0.022083</pose>
+        <geometry><box><size>7.041 15.256 10.845</size></box></geometry>
+      </collision>
+      <collision name="c77">
+        <pose>-27.107 -174.237 4.229 0 0 1.588805</pose>
+        <geometry><box><size>15.211 6.957 8.458</size></box></geometry>
+      </collision>
+      <collision name="c78">
+        <pose>-33.557 -174.340 5.099 0 0 -1.552787</pose>
+        <geometry><box><size>15.240 5.945 10.198</size></box></geometry>
+      </collision>
+      <collision name="c79">
+        <pose>-31.948 -127.847 4.966 0 0 -3.119635</pose>
+        <geometry><box><size>6.069 15.256 9.933</size></box></geometry>
+      </collision>
+      <collision name="c80">
+        <pose>-107.202 -133.079 3.332 0 0 -1.547062</pose>
+        <geometry><box><size>14.345 5.679 6.664</size></box></geometry>
+      </collision>
+      <collision name="c81">
+        <pose>-148.426 -116.511 6.000 0 0 -1.547400</pose>
+        <geometry><box><size>55.666 15.282 12.000</size></box></geometry>
+      </collision>
+      <collision name="c82">
+        <pose>-150.944 -190.137 10.500 0 0 -1.550809</pose>
+        <geometry><box><size>32.784 51.300 21.000</size></box></geometry>
+      </collision>
+      <collision name="c83">
+        <pose>-161.633 8.353 4.500 0 0 -1.547726</pose>
+        <geometry><box><size>16.469 6.456 9.000</size></box></geometry>
+      </collision>
+      <collision name="c84">
+        <pose>-170.317 8.091 5.151 0 0 1.604222</pose>
+        <geometry><box><size>23.681 7.126 10.303</size></box></geometry>
+      </collision>
+      <collision name="c85">
+        <pose>-178.158 11.498 3.240 0 0 1.594654</pose>
+        <geometry><box><size>20.770 7.337 6.481</size></box></geometry>
+      </collision>
+      <collision name="c86">
+        <pose>-190.547 202.001 30.000 0 0 1.597255</pose>
+        <geometry><box><size>45.694 71.976 60.000</size></box></geometry>
+      </collision>
+      <collision name="c87">
+        <pose>-208.517 18.875 5.373 0 0 -3.135129</pose>
+        <geometry><box><size>51.316 44.253 10.745</size></box></geometry>
+      </collision>
+      <collision name="c88">
+        <pose>-204.073 -194.819 5.050 0 0 0.017657</pose>
+        <geometry><box><size>55.566 36.693 10.100</size></box></geometry>
+      </collision>
+      <collision name="c89">
+        <pose>-213.781 -120.214 2.453 0 0 0.022256</pose>
+        <geometry><box><size>83.742 50.717 4.906</size></box></geometry>
+      </collision>
+      <collision name="c90">
+        <pose>-183.677 113.700 3.953 0 0 2.425040</pose>
+        <geometry><box><size>29.715 31.592 7.907</size></box></geometry>
+      </collision>
+      <collision name="c91">
+        <pose>-164.528 69.058 4.547 0 0 -3.137696</pose>
+        <geometry><box><size>39.669 32.084 9.094</size></box></geometry>
+      </collision>
+      <collision name="c92">
+        <pose>-199.691 95.543 6.000 0 0 -2.289324</pose>
+        <geometry><box><size>14.489 30.363 12.000</size></box></geometry>
+      </collision>
+      <collision name="c93">
+        <pose>117.152 -31.272 3.492 0 0 1.621568</pose>
+        <geometry><box><size>19.227 10.208 6.984</size></box></geometry>
+      </collision>
+      <collision name="c94">
+        <pose>-20.473 -65.952 4.519 0 0 0.022542</pose>
+        <geometry><box><size>40.435 29.172 9.039</size></box></geometry>
+      </collision>
+      <collision name="c95">
+        <pose>113.086 -58.733 4.599 0 0 0.034630</pose>
+        <geometry><box><size>21.505 7.168 9.198</size></box></geometry>
+      </collision>
+      <collision name="c96">
+        <pose>113.567 -71.746 3.059 0 0 -3.126624</pose>
+        <geometry><box><size>20.057 6.241 6.118</size></box></geometry>
+      </collision>
+      <collision name="c97">
+        <pose>112.457 -78.875 4.500 0 0 0.041123</pose>
+        <geometry><box><size>24.865 5.700 9.000</size></box></geometry>
+      </collision>
+      <collision name="c98">
+        <pose>114.473 -86.073 3.975 0 0 0.037535</pose>
+        <geometry><box><size>20.143 6.658 7.949</size></box></geometry>
+      </collision>
+      <collision name="c99">
+        <pose>113.201 -93.007 3.152 0 0 1.604112</pose>
+        <geometry><box><size>7.479 23.193 6.304</size></box></geometry>
+      </collision>
+      <collision name="c100">
+        <pose>120.698 -103.757 5.742 0 0 0.025680</pose>
+        <geometry><box><size>13.419 6.713 11.484</size></box></geometry>
+      </collision>
+      <collision name="c101">
+        <pose>-81.256 -118.466 1.500 0 0 1.600045</pose>
+        <geometry><box><size>12.768 14.927 3.000</size></box></geometry>
+      </collision>
+      <collision name="c102">
+        <pose>-87.372 -131.296 4.500 0 0 1.588242</pose>
+        <geometry><box><size>12.044 27.711 9.000</size></box></geometry>
+      </collision>
+      <collision name="c103">
+        <pose>-91.766 -140.210 4.500 0 0 -1.544333</pose>
+        <geometry><box><size>5.803 13.066 9.000</size></box></geometry>
+      </collision>
+      <collision name="c104">
+        <pose>122.356 -195.881 4.551 0 0 0.034094</pose>
+        <geometry><box><size>14.483 8.820 9.102</size></box></geometry>
+      </collision>
+      <collision name="c105">
+        <pose>-92.680 154.249 5.472 0 0 -1.554301</pose>
+        <geometry><box><size>30.381 27.615 10.943</size></box></geometry>
+      </collision>
+      <collision name="c106">
+        <pose>-23.470 148.691 6.000 0 0 -3.110118</pose>
+        <geometry><box><size>42.767 14.037 12.000</size></box></geometry>
+      </collision>
+      <collision name="c107">
+        <pose>97.153 228.220 15.000 0 0 -1.557276</pose>
+        <geometry><box><size>74.380 49.128 30.000</size></box></geometry>
+      </collision>
+      <collision name="c108">
+        <pose>44.679 93.960 6.000 0 0 -3.121748</pose>
+        <geometry><box><size>83.293 57.420 12.000</size></box></geometry>
+      </collision>
+      <collision name="c109">
+        <pose>0.814 -196.544 2.764 0 0 -3.096559</pose>
+        <geometry><box><size>6.415 6.596 5.528</size></box></geometry>
+      </collision>
+      <collision name="c110">
+        <pose>24.803 -70.358 2.954 0 0 -1.551403</pose>
+        <geometry><box><size>11.149 7.672 5.908</size></box></geometry>
+      </collision>
+      <collision name="c111">
+        <pose>-19.089 -105.106 3.979 0 0 0.027397</pose>
+        <geometry><box><size>6.892 6.856 7.958</size></box></geometry>
+      </collision>
+      <collision name="c112">
+        <pose>48.153 -89.095 3.929 0 0 -1.545823</pose>
+        <geometry><box><size>9.393 7.322 7.857</size></box></geometry>
+      </collision>
+      <collision name="c113">
+        <pose>-5.431 -104.755 2.361 0 0 -3.114456</pose>
+        <geometry><box><size>6.959 6.869 4.722</size></box></geometry>
+      </collision>
+      <collision name="c114">
+        <pose>-33.096 -105.484 5.056 0 0 -3.114999</pose>
+        <geometry><box><size>7.158 6.854 10.112</size></box></geometry>
+      </collision>
+      <collision name="c115">
+        <pose>-26.696 -197.645 3.337 0 0 0.039377</pose>
+        <geometry><box><size>7.093 6.712 6.674</size></box></geometry>
+      </collision>
+      <collision name="c116">
+        <pose>24.453 194.941 2.459 0 0 -1.534472</pose>
+        <geometry><box><size>6.869 6.712 4.918</size></box></geometry>
+      </collision>
+      <collision name="c117">
+        <pose>-33.133 -197.901 5.706 0 0 1.607895</pose>
+        <geometry><box><size>6.729 5.857 11.411</size></box></geometry>
+      </collision>
+      <collision name="c118">
+        <pose>107.463 -105.481 4.784 0 0 1.562847</pose>
+        <geometry><box><size>6.253 3.653 9.568</size></box></geometry>
+      </collision>
+      <collision name="c119">
+        <pose>95.432 -72.277 2.296 0 0 -3.126922</pose>
+        <geometry><box><size>10.610 6.080 4.592</size></box></geometry>
+      </collision>
+      <collision name="c120">
+        <pose>-19.686 -197.384 5.572 0 0 0.034534</pose>
+        <geometry><box><size>7.184 6.709 11.144</size></box></geometry>
+      </collision>
+      <collision name="c121">
+        <pose>78.786 -69.282 4.582 0 0 1.547567</pose>
+        <geometry><box><size>11.788 6.823 9.164</size></box></geometry>
+      </collision>
+      <collision name="c122">
+        <pose>-170.849 41.559 2.728 0 0 -3.127349</pose>
+        <geometry><box><size>7.076 7.798 5.455</size></box></geometry>
+      </collision>
+      <collision name="c123">
+        <pose>-12.289 -104.929 4.256 0 0 -1.552660</pose>
+        <geometry><box><size>6.897 6.825 8.511</size></box></geometry>
+      </collision>
+      <collision name="c124">
+        <pose>25.143 -88.990 5.469 0 0 -1.558560</pose>
+        <geometry><box><size>7.621 7.166 10.938</size></box></geometry>
+      </collision>
+      <collision name="c125">
+        <pose>88.646 -202.565 5.524 0 0 -1.555936</pose>
+        <geometry><box><size>6.710 6.708 11.048</size></box></geometry>
+      </collision>
+      <collision name="c126">
+        <pose>55.820 -72.156 4.128 0 0 -0.006495</pose>
+        <geometry><box><size>6.832 7.341 8.255</size></box></geometry>
+      </collision>
+      <collision name="c127">
+        <pose>70.980 -71.790 5.483 0 0 0.004603</pose>
+        <geometry><box><size>7.439 7.021 10.967</size></box></geometry>
+      </collision>
+      <collision name="c128">
+        <pose>94.103 -105.450 3.533 0 0 -3.127329</pose>
+        <geometry><box><size>7.015 9.297 7.066</size></box></geometry>
+      </collision>
+      <collision name="c129">
+        <pose>101.491 -103.741 4.064 0 0 1.611388</pose>
+        <geometry><box><size>5.525 5.683 8.129</size></box></geometry>
+      </collision>
+      <collision name="c130">
+        <pose>146.554 179.742 2.326 0 0 0.016013</pose>
+        <geometry><box><size>6.251 5.643 4.652</size></box></geometry>
+      </collision>
+      <collision name="c131">
+        <pose>-12.750 -197.095 2.495 0 0 0.041000</pose>
+        <geometry><box><size>7.434 6.654 4.990</size></box></geometry>
+      </collision>
+      <collision name="c132">
+        <pose>17.386 -70.524 4.754 0 0 1.590954</pose>
+        <geometry><box><size>11.150 7.373 9.509</size></box></geometry>
+      </collision>
+      <collision name="c133">
+        <pose>63.477 -71.873 2.826 0 0 1.600417</pose>
+        <geometry><box><size>7.289 6.827 5.651</size></box></geometry>
+      </collision>
+      <collision name="c134">
+        <pose>-5.632 -196.823 3.500 0 0 0.034536</pose>
+        <geometry><box><size>7.298 6.649 7.001</size></box></geometry>
+      </collision>
+      <collision name="c135">
+        <pose>0.720 -104.591 5.260 0 0 0.026034</pose>
+        <geometry><box><size>5.547 6.869 10.520</size></box></geometry>
+      </collision>
+      <collision name="c136">
+        <pose>94.045 -86.324 3.689 0 0 -3.111365</pose>
+        <geometry><box><size>8.179 6.553 7.378</size></box></geometry>
+      </collision>
+      <collision name="c137">
+        <pose>-178.308 39.649 4.888 0 0 -1.545431</pose>
+        <geometry><box><size>9.155 7.475 9.775</size></box></geometry>
+      </collision>
+      <collision name="c138">
+        <pose>94.432 -93.338 2.537 0 0 0.013967</pose>
+        <geometry><box><size>7.164 5.488 5.075</size></box></geometry>
+      </collision>
+      <collision name="c139">
+        <pose>-26.053 -105.295 3.436 0 0 -3.114810</pose>
+        <geometry><box><size>7.050 6.856 6.873</size></box></geometry>
+      </collision>
+      <collision name="c140">
+        <pose>41.697 -72.231 4.741 0 0 -0.007037</pose>
+        <geometry><box><size>12.684 7.529 9.483</size></box></geometry>
+      </collision>
+      <collision name="c141">
+        <pose>-18.127 -45.639 5.165 0 0 1.584759</pose>
+        <geometry><box><size>9.188 37.474 10.329</size></box></geometry>
+      </collision>
+      <collision name="c142">
+        <pose>-20.403 -31.662 5.342 0 0 0.025086</pose>
+        <geometry><box><size>41.182 19.291 10.685</size></box></geometry>
+      </collision>
+      <collision name="c143">
+        <pose>192.451 -83.278 4.500 0 0 0.025897</pose>
+        <geometry><box><size>81.585 81.576 9.000</size></box></geometry>
+      </collision>
+      <collision name="c144">
+        <pose>-26.900 180.407 6.000 0 0 -3.123735</pose>
+        <geometry><box><size>41.901 48.949 12.000</size></box></geometry>
+      </collision>
+      <collision name="c145">
+        <pose>74.619 44.479 3.351 0 0 -1.548273</pose>
+        <geometry><box><size>30.609 22.650 6.702</size></box></geometry>
+      </collision>
+      <collision name="c146">
+        <pose>47.151 192.536 2.587 0 0 -3.120681</pose>
+        <geometry><box><size>6.909 6.666 5.174</size></box></geometry>
+      </collision>
+      <collision name="c147">
+        <pose>107.233 31.984 6.000 0 0 1.589024</pose>
+        <geometry><box><size>57.563 37.017 12.000</size></box></geometry>
+      </collision>
+      <collision name="c148">
+        <pose>-133.364 22.211 5.185 0 0 1.591488</pose>
+        <geometry><box><size>47.709 36.016 10.369</size></box></geometry>
+      </collision>
+      <collision name="c149">
+        <pose>-23.833 46.311 6.000 0 0 1.588554</pose>
+        <geometry><box><size>92.534 45.508 12.000</size></box></geometry>
+      </collision>
+      <collision name="c150">
+        <pose>106.006 95.436 6.000 0 0 0.017935</pose>
+        <geometry><box><size>34.710 56.850 12.000</size></box></geometry>
+      </collision>
+      <collision name="c151">
+        <pose>87.022 -58.198 5.054 0 0 1.603048</pose>
+        <geometry><box><size>7.531 9.568 10.108</size></box></geometry>
+      </collision>
+      <collision name="c152">
+        <pose>-203.119 -170.823 2.662 0 0 -3.124226</pose>
+        <geometry><box><size>21.710 11.289 5.324</size></box></geometry>
+      </collision>
+      <collision name="c153">
+        <pose>-104.578 -94.914 7.500 0 0 -1.548564</pose>
+        <geometry><box><size>34.340 60.057 15.000</size></box></geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
